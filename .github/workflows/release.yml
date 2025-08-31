@@ -9,11 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: Oval-Tutu/publish-to-itch-with-butler@v1.0.0
-        with:
-          api-key: ${{ secrets.BUTLER_API_KEY }}
-          itch_user: chemhelper
-          itch_game: chem-helper
-          channel: html
-          package: ./build/
-          version: ${{ github.event.release.tag_name }}
+      - uses: yeslayla/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: html
+          ITCH_GAME: Chem-Helper
+          ITCH_USER: ChemHelper
+          PACKAGE: /Builds/
+          VERSION: ${{ github.event.release.tag_name }}
