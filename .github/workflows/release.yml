@@ -15,5 +15,5 @@ jobs:
           CHANNEL: html
           ITCH_GAME: chem-helper
           ITCH_USER: chemhelper
-          PACKAGE: Builds
+          PACKAGE: Builds/
           VERSION: ${{ github.event.release.tag_name }}
