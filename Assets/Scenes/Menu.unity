@@ -890,7 +890,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resultText: {fileID: 1970287436}
   inputField: {fileID: 459013609}
-  finalRegex: ^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.)[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$
 --- !u!1 &74341925
 GameObject:
   m_ObjectHideFlags: 0
@@ -2214,9 +2213,6 @@ MonoBehaviour:
   - {fileID: 933586305}
   - {fileID: 716658597}
   resultText: {fileID: 1079443273}
-  posRegexString: ^(?:(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$
-  negRegexString: ^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$
-  zeroRegexString: ^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$
 --- !u!1 &260893498
 GameObject:
   m_ObjectHideFlags: 0
@@ -5819,9 +5815,6 @@ MonoBehaviour:
   - {fileID: 1568491156}
   - {fileID: 514746708}
   resultText: {fileID: 2045827429}
-  zeroRegexString: ^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$
-  finalNumRegexString: ^(?:(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$
-  finalCompRegexString: ^(?:[A-Z][a-z]?[0-9]*)+$
 --- !u!1001 &569830556
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5979,7 +5972,6 @@ MonoBehaviour:
   endPrefInput: {fileID: 770948229}
   endUnitInput: {fileID: 74341927}
   resultText: {fileID: 2145398603}
-  finalRegexString: ^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.)[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$
 --- !u!1001 &600580686
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6136,8 +6128,6 @@ MonoBehaviour:
   - {fileID: 160968393}
   - {fileID: 37627980}
   resultText: {fileID: 994190401}
-  finalRegexString: ^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.)[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$
-  zeroRegexString: ^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$
 --- !u!224 &600580690 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1217770449204153242, guid: 822e0f13835617a439a131f25c966395, type: 3}
@@ -11723,9 +11713,6 @@ MonoBehaviour:
   - {fileID: 1859656230}
   - {fileID: 1420231145}
   resultText: {fileID: 161754921}
-  posFinalRegexString: ^(?:(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$
-  negFinalRegexString: ^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$
-  zeroRegexString: ^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$
 --- !u!1 &1273241651
 GameObject:
   m_ObjectHideFlags: 0
@@ -13650,8 +13637,6 @@ MonoBehaviour:
   - {fileID: 601558530}
   - {fileID: 769874129}
   resultText: {fileID: 708280423}
-  finalRegexString: ^(?:(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$
-  zeroRegexString: ^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$
 --- !u!224 &1431983646 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1217770449204153242, guid: 822e0f13835617a439a131f25c966395, type: 3}
@@ -14558,6 +14543,7 @@ RectTransform:
   - {fileID: 2084233636}
   - {fileID: 217870947}
   - {fileID: 2130905424}
+  - {fileID: 1682048461}
   m_Father: {fileID: 274643712}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -15167,8 +15153,6 @@ MonoBehaviour:
   resultText: {fileID: 1507897374}
   experiInput: {fileID: 1974616981}
   theorInput: {fileID: 662932258}
-  finalRegexString: ^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.)[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$
-  zeroRegexString: ^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$
 --- !u!1001 &1654178005
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15853,6 +15837,112 @@ PrefabInstance:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
   m_PrefabInstance: {fileID: 1673675786}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1682048460
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1541975252}
+    m_Modifications:
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 160
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7697277738987917395, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_text
+      value: Percent Comp.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8300776346474597242, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+      propertyPath: m_Name
+      value: PerCompButton
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+--- !u!224 &1682048461 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4380434809518224784, guid: c5d80d2a822911d409274cad6d009e46, type: 3}
+  m_PrefabInstance: {fileID: 1682048460}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1683532949
 GameObject:
@@ -19240,8 +19330,6 @@ MonoBehaviour:
   waveResultText: {fileID: 1956099849}
   freqResultText: {fileID: 1177369096}
   energyResultText: {fileID: 601803560}
-  finalRegexString: ^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.)[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$
-  zeroRegexString: ^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$
 --- !u!1 &2102499513
 GameObject:
   m_ObjectHideFlags: 0
