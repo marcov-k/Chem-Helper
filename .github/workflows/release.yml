@@ -1,0 +1,19 @@
+name: Push to Itch
+
+on:
+  release:
+    types: [published] # This triggers the workflow when a release is published
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Oval-Tutu/publish-to-itch-with-butler@v1
+        with:
+          api-key: ${{ secrets.BUTLER_API_KEY }}
+          itch_user: chemhelper
+          itch_game: chem-helper
+          channel: html
+          package: ./build/
+          version: ${{ github.event.release.tag_name }}
