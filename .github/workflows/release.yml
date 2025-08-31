@@ -13,7 +13,7 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
           CHANNEL: html
-          ITCH_GAME: Chem-Helper
-          ITCH_USER: ChemHelper
+          ITCH_GAME: chem-helper
+          ITCH_USER: chemhelper
           PACKAGE: /Builds/
           VERSION: ${{ github.event.release.tag_name }}
