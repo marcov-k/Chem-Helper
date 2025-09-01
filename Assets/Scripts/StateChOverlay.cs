@@ -9,13 +9,13 @@ public class StateChOverlay : MonoBehaviour
 {
     [SerializeField] List<TMP_InputField> inputs = new List<TMP_InputField>(); // in the order: energy, moles, HoF/V
     [SerializeField] ResultLocker resultText;
-    string posFinalRegexString = @"^(?:(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$";
-    string negFinalRegexString = @"^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$";
-    string zeroRegexString = @"^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$";
+    const string posFinalRegexString = @"^(?:(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$";
+    const string negFinalRegexString = @"^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$";
+    const string zeroRegexString = @"^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$";
     Regex posFinalRegex;
     Regex negFinalRegex;
     Regex zeroRegex;
-    List<int> inputIndexes = new List<int>();
+    readonly List<int> inputIndexes = new List<int>();
     IndexFIFO setInputs;
     Warning warning;
 

@@ -11,8 +11,8 @@ public class UnitConvOverlay : MonoBehaviour
     [SerializeField] TMP_Dropdown endPrefInput;
     [SerializeField] TMP_Dropdown endUnitInput;
     [SerializeField] ResultLocker resultText;
-    string finalRegexString = @"^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$";
-    string zeroRegexString = @"^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$";
+    const string finalRegexString = @"^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$";
+    const string zeroRegexString = @"^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$";
     Regex zeroRegex;
     Regex finalRegex;
     Warning warning;

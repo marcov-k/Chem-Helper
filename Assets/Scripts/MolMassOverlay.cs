@@ -9,13 +9,13 @@ public class MolMassOverlay : MonoBehaviour
     [SerializeField] TMP_InputField compInput;
     [SerializeField] List<TMP_InputField> inputs = new List<TMP_InputField>(); // in the order: mass, moles
     [SerializeField] ResultLocker resultText;
-    string zeroRegexString = @"^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$";
-    string finalNumRegexString = @"^(?:(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$";
-    string finalCompRegexString = @"^(?:(?:\((?:[A-Z][a-z]?[0-9]*)+\)[0-9]*)|(?:[A-Z][a-z]?[0-9]*))+$";
+    const string zeroRegexString = @"^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$";
+    const string finalNumRegexString = @"^(?:(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$";
+    const string finalCompRegexString = @"^(?:(?:\((?:[A-Z][a-z]?[0-9]*)+\)[0-9]*)|(?:[A-Z][a-z]?[0-9]*))+$";
     Regex zeroRegex;
     Regex finalNumRegex;
     Regex finalCompRegex;
-    List<int> inputIndexes = new List<int>();
+    readonly List<int> inputIndexes = new List<int>();
     IndexFIFO setInputs;
     Warning warning;
 

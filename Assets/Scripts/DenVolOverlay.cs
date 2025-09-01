@@ -8,12 +8,12 @@ public class DenVolOverlay : MonoBehaviour
 {
     [SerializeField] List<TMP_InputField> inputs = new List<TMP_InputField>(); // in the order: mass, density, volume
     [SerializeField] ResultLocker resultText;
-    string finalRegexString = @"^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$";
-    string zeroRegexString = @"^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$";
+    const string finalRegexString = @"^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$";
+    const string zeroRegexString = @"^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$";
     Regex finalRegex;
     Regex zeroRegex;
     Warning warning;
-    List<int> inputIndexes = new List<int>();
+    readonly List<int> inputIndexes = new List<int>();
     IndexFIFO setInputs;
 
     void Awake()

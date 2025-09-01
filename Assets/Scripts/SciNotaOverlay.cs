@@ -7,7 +7,7 @@ public class SciNotaOverlay : MonoBehaviour
     [SerializeField] ResultLocker resultText;
     [SerializeField] TMP_InputField inputField;
     Warning warning;
-    string finalRegex = @"^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$";
+    const string finalRegex = @"^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$";
     Regex regex;
 
     void Awake()

@@ -7,16 +7,16 @@ using UnityEngine.UIElements;
 
 public class EquationHandler
 {
-    static List<string> nums = new List<string> { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-    static List<UnitPrefix> prefixes = new List<UnitPrefix> { new UnitPrefix("T", 12), new UnitPrefix("G", 9), new UnitPrefix("M", 6), new UnitPrefix("k", 3), new UnitPrefix("h", 2), new UnitPrefix("da", 1), new UnitPrefix("", 0), new UnitPrefix("d", -1),
+    static readonly List<string> nums = new List<string> { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+    static readonly List<UnitPrefix> prefixes = new List<UnitPrefix> { new UnitPrefix("T", 12), new UnitPrefix("G", 9), new UnitPrefix("M", 6), new UnitPrefix("k", 3), new UnitPrefix("h", 2), new UnitPrefix("da", 1), new UnitPrefix("", 0), new UnitPrefix("d", -1),
         new UnitPrefix("c", -2), new UnitPrefix("m", -3), new UnitPrefix("μ", -6), new UnitPrefix("n", -9), new UnitPrefix("p", -12)};
-    static List<string> units = new List<string> { "g", "l", "m", "m3" };
-    static string zeroDivRegex = @"^.*(?<=\/)0+\.?0*(?:[\^x\/\+\-].*)*$";
-    static string zeroRegexString = @"^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$";
-    static string compDivRegexString = @"^(?<comp>\(?(?:[A-Z][a-z]?[0-9]*)+(?:\)[0-9]*)?)+$";
-    static string compExpRegexString = @"^\(?(?<comp>(?:[A-Z][a-z]?[0-9]*)+)\)?(?<count>[0-9]*)?$";
-    static string elemPullRegexString = @"^(?<elem>[A-Z][a-z]?[0-9]*)+$";
-    static string elemSplitRegexString = @"^(?<elem>[A-Z][a-z]?)(?<count>[1-9]*)$";
+    static readonly List<string> units = new List<string> { "g", "l", "m", "m3" };
+    const string zeroDivRegex = @"^.*(?<=\/)0+\.?0*(?:[\^x\/\+\-].*)*$";
+    const string zeroRegexString = @"^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$";
+    const string compDivRegexString = @"^(?<comp>\(?(?:[A-Z][a-z]?[0-9]*)+(?:\)[0-9]*)?)+$";
+    const string compExpRegexString = @"^\(?(?<comp>(?:[A-Z][a-z]?[0-9]*)+)\)?(?<count>[0-9]*)?$";
+    const string elemPullRegexString = @"^(?<elem>[A-Z][a-z]?[0-9]*)+$";
+    const string elemSplitRegexString = @"^(?<elem>[A-Z][a-z]?)(?<count>[1-9]*)$";
     static ElementContainerSO elemCont;
 
     public static int SigFigCount(string input)

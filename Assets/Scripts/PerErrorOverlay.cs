@@ -7,8 +7,8 @@ public class PerErrorOverlay : MonoBehaviour
     [SerializeField] ResultLocker resultText;
     [SerializeField] TMP_InputField experiInput;
     [SerializeField] TMP_InputField theorInput;
-    string finalRegexString = @"^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$";
-    string zeroRegexString = @"^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$";
+    const string finalRegexString = @"^(?:\-?(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$";
+    const string zeroRegexString = @"^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$";
     Warning warning;
     Regex finalRegex;
     Regex zeroRegex;

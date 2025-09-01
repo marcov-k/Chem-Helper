@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class OverlayManager : MonoBehaviour
 {
-    List<GameObject> overlays = new List<GameObject>();
+    readonly List<GameObject> overlays = new List<GameObject>();
     [SerializeField] GameObject mainCanvas;
     [SerializeField] ElementContainerSO elemContainer;
 

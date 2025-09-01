@@ -9,11 +9,11 @@ public class PerCompOverlay : MonoBehaviour
     [SerializeField] TMP_InputField input;
     [SerializeField] GameObject resultPrefab;
     [SerializeField] GameObject resultPlaceholder;
-    List<GameObject> outputObjects = new List<GameObject>();
-    int resultsPerLine = 4;
-    int outputSigfigs = 4;
+    readonly List<GameObject> outputObjects = new List<GameObject>();
+    const int resultsPerLine = 4;
+    const int outputSigfigs = 4;
     [SerializeField] ElementContainerSO elemCont;
-    string finalCompRegexString = @"^(?:(?:\((?:[A-Z][a-z]?[0-9]*)+\)[0-9]*)|(?:[A-Z][a-z]?[0-9]*))+$";
+    const string finalCompRegexString = @"^(?:(?:\((?:[A-Z][a-z]?[0-9]*)+\)[0-9]*)|(?:[A-Z][a-z]?[0-9]*))+$";
     Regex finalCompRegex;
     Warning warning;
 

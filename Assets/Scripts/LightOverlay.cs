@@ -12,17 +12,17 @@ public class LightOverlay : MonoBehaviour
     [SerializeField] ResultLocker waveResultText;
     [SerializeField] ResultLocker freqResultText;
     [SerializeField] ResultLocker energyResultText;
-    string finalRegexString = @"^(?:(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$";
-    string zeroRegexString = @"^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$";
+    const string finalRegexString = @"^(?:(?:(?:[0-9]+)|(?:[0-9]+\.|(?:\.[0-9]+))[0-9]*))(?:x10\^\-?[1-9][0-9]*)?$";
+    const string zeroRegexString = @"^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$";
     Regex finalRegex;
     Regex zeroRegex;
-    List<int> inputIndexes = new List<int>();
-    List<int> freqIndexes = new List<int>();
+    readonly List<int> inputIndexes = new List<int>();
+    readonly List<int> freqIndexes = new List<int>();
     IndexFIFO setInputs;
     IndexFIFO setFreqs;
     Warning warning;
-    string speed = "3.0x10^8";
-    string planck = "6.626x10^-34";
+    const string speed = "3.0x10^8";
+    const string planck = "6.626x10^-34";
 
     void Awake()
     {
