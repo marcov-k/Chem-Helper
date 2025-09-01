@@ -4,7 +4,7 @@ using TMPro;
 public class ResultLocker : MonoBehaviour
 {
     TMP_InputField myInputField;
-    string text;
+    string text = "Result: ";
 
     void Awake()
     {
@@ -20,6 +20,11 @@ public class ResultLocker : MonoBehaviour
     {
         text = newText;
         myInputField.text = text;
+    }
+
+    public string GetText()
+    {
+        return text;
     }
 
     public void OnValueChanged()
