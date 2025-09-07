@@ -10,7 +10,7 @@ public class OverlayManager : MonoBehaviour
     void Start()
     {
         SetOverlays();
-        EquationHandler.SetElemCont(elemContainer);
+        ReactionHandler.SetElemCont(elemContainer);
     }
 
     void SetOverlays()

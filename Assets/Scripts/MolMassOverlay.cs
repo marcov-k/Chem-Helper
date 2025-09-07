@@ -76,7 +76,7 @@ public class MolMassOverlay : MonoBehaviour
 
     public DoubleString CalculateMols(MolMassData data, int solveIndex)
     {
-        string atomMass = EquationHandler.CalculateCompoundMass(data.compound);
+        string atomMass = ReactionHandler.CalculateCompoundMass(data.compound);
         DoubleString result = null;
         switch (solveIndex)
         {
@@ -123,7 +123,7 @@ public class MolMassOverlay : MonoBehaviour
             warningText += "Missing Input(s)";
             showWarning = true;
         }
-        else if (!finalCompRegex.IsMatch(comp) || !EquationHandler.ValidateCompound(comp))
+        else if (!finalCompRegex.IsMatch(comp) || !ReactionHandler.ValidateCompound(comp))
         {
             warningText += "Invalid Compound";
             showWarning = true;

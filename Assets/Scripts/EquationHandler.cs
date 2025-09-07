@@ -3,30 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class EquationHandler
 {
-    static readonly List<string> nums = new List<string> { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-    static readonly List<UnitPrefix> prefixes = new List<UnitPrefix> { new UnitPrefix("T", 12), new UnitPrefix("G", 9), new UnitPrefix("M", 6), new UnitPrefix("k", 3), new UnitPrefix("h", 2), new UnitPrefix("da", 1), new UnitPrefix("", 0), new UnitPrefix("d", -1),
+    static readonly PList<string> nums = new PList<string> { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+    static readonly PList<UnitPrefix> prefixes = new PList<UnitPrefix> { new UnitPrefix("T", 12), new UnitPrefix("G", 9), new UnitPrefix("M", 6), new UnitPrefix("k", 3), new UnitPrefix("h", 2), new UnitPrefix("da", 1), new UnitPrefix("", 0), new UnitPrefix("d", -1),
         new UnitPrefix("c", -2), new UnitPrefix("m", -3), new UnitPrefix("μ", -6), new UnitPrefix("n", -9), new UnitPrefix("p", -12)};
-    static readonly List<string> units = new List<string> { "g", "l", "m", "m3" };
+    static readonly PList<string> units = new PList<string> { "g", "l", "m", "m3" };
     const string zeroDivRegex = @"^.*(?<=\/)0+\.?0*(?:[\^x\/\+\-].*)*$";
     const string zeroRegexString = @"^\-?0+\.?0*(?:x10\^\-?[0-9]*)?$";
-    const string compDivRegexString = @"^(?<comp>\(?(?:[A-Z][a-z]?[0-9]*)+(?:\)[0-9]*)?)+$";
-    const string compExpRegexString = @"^\(?(?<comp>(?:[A-Z][a-z]?[0-9]*)+)\)?(?<count>[0-9]*)?$";
-    const string elemPullRegexString = @"^(?<elem>[A-Z][a-z]?[0-9]*)+$";
-    const string elemSplitRegexString = @"^(?<elem>[A-Z][a-z]?)(?<count>[1-9]*)$";
-    static ElementContainerSO elemCont;
 
     public static int SigFigCount(string input)
     {
         input = RemoveCharacter(input, " ");
         input = RemoveCharacter(input, "-");
         input = RemoveCharacter(input, "+");
-        List<string> characters = SplitString(input);
+        PList<string> characters = SplitString(input);
         bool containsDecimal = characters.Contains(".");
-        List<int> removeIndexes = new List<int>();
+        PList<int> removeIndexes = new PList<int>();
         for (int i = 0; i < characters.Count; i ++)
         {
             if (characters[i] == "0")
@@ -93,8 +87,8 @@ public class EquationHandler
         input = RemoveCharacter(input, " ");
         input = RemoveCharacter(input, "(");
         input = RemoveCharacter(input, ")");
-        List<string> parts = SplitOperation(input);
-        List<string> numParts = new List<string>();
+        PList<string> parts = SplitOperation(input);
+        PList<string> numParts = new PList<string>();
         bool numFound = false;
         foreach (string part in parts)
         {
@@ -120,23 +114,23 @@ public class EquationHandler
         Regex divRegex = new Regex(zeroDivRegex);
         input = RemoveCharacter(input, " ");
         input = input.Replace("*", "x");
-        List<string> characters = new List<string>();
+        PList<string> characters = new PList<string>();
         characters.AddRange(SplitString(input));
-        List<string> resolvedCharas = new List<string>();
-        resolvedCharas.AddRange(ResolveParentheses(characters.ToList()));
+        PList<string> resolvedCharas = new PList<string>();
+        resolvedCharas.AddRange(ResolveParentheses(characters.ToPList()));
         string equation = "";
-        foreach (string chara in resolvedCharas.ToList())
+        foreach (string chara in resolvedCharas.ToPList())
         {
             equation += chara;
         }
-        List<Operation> operations = new List<Operation>();
+        PList<Operation> operations = new PList<Operation>();
         operations.Add(new Operation(0, equation));
         string result = equation;
         int index = 0;
         Operation newOperation;
-        List<string> parts = SplitOperation(equation);
-        List<int> sigfigCounts = new List<int>();
-        List<int> decimalCounts = new List<int>();
+        PList<string> parts = SplitOperation(equation);
+        PList<int> sigfigCounts = new PList<int>();
+        PList<int> decimalCounts = new PList<int>();
         bool checkSigfig = false;
         foreach (string part in parts)
         {
@@ -176,9 +170,9 @@ public class EquationHandler
             characters.Clear();
             characters.AddRange(SplitString(operations[0].operation));
             resolvedCharas.Clear();
-            resolvedCharas.AddRange(ResolveParentheses(characters.ToList()));
+            resolvedCharas.AddRange(ResolveParentheses(characters.ToPList()));
             operations[0].operation = "";
-            foreach (string chara in resolvedCharas.ToList())
+            foreach (string chara in resolvedCharas.ToPList())
             {
                 operations[0].operation += chara;
             }
@@ -276,7 +270,7 @@ public class EquationHandler
 
     public static string SolveExponent(string input)
     {
-        List<string> characters = SplitString(input);
+        PList<string> characters = SplitString(input);
         string baseString = "";
         string expoString = "";
         bool foundExpo = false;
@@ -310,7 +304,7 @@ public class EquationHandler
         input = RemoveCharacter(input, " ");
         input = RemoveCharacter(input, "(");
         input = RemoveCharacter(input, ")");
-        List<string> parts = SplitOperation(input);
+        PList<string> parts = SplitOperation(input);
         double result = Convert.ToDouble(parts[0]);
         int lastIndex = parts.Count - 1;
         if (parts.Contains("^"))
@@ -336,9 +330,9 @@ public class EquationHandler
     public static int OperationCount(string input)
     {
         input = RemoveCharacter(input, " ");
-        List<string> characters = SplitString(input);
+        PList<string> characters = SplitString(input);
         characters = ResolveParentheses(characters);
-        List<string> operators = new List<string>();
+        PList<string> operators = new PList<string>();
         int index = 0;
         foreach (string chara in characters)
         {
@@ -371,9 +365,9 @@ public class EquationHandler
 
     public static Operation InsertOperation(Operation toInsert, Operation parent)
     {
-        List<string> parentChars = SplitString(parent.operation);
-        List<string> insertChars = SplitString(toInsert.operation);
-        List<string> resultChars = new List<string>();
+        PList<string> parentChars = SplitString(parent.operation);
+        PList<string> insertChars = SplitString(toInsert.operation);
+        PList<string> resultChars = new PList<string>();
         resultChars.AddRange(parentChars);
         resultChars.InsertRange(toInsert.index, insertChars);
         string result = "";
@@ -385,14 +379,14 @@ public class EquationHandler
         return output;
     }
 
-    public static List<string> ResolveParentheses(List<string> input)
+    public static PList<string> ResolveParentheses(PList<string> input)
     {
-        List<string> output = new List<string>();
-        List<int> opensIndexes = new List<int>();
-        List<int> closesIndexes = new List<int>();
+        PList<string> output = new PList<string>();
+        PList<int> opensIndexes = new PList<int>();
+        PList<int> closesIndexes = new PList<int>();
         string part = "";
         int index = 0;
-        foreach (string chara in input.ToList())
+        foreach (string chara in input.ToPList())
         {
             if (chara == "(")
             {
@@ -420,7 +414,7 @@ public class EquationHandler
             }
         }
         index = 0;
-        foreach (string chara in input.ToList())
+        foreach (string chara in input.ToPList())
         {
             if (chara == "(")
             {
@@ -444,12 +438,12 @@ public class EquationHandler
             }
             index++;
         }
-        input = output.ToList();
+        input = output.ToPList();
         output.Clear();
         opensIndexes.Clear();
         closesIndexes.Clear();
         index = 0;
-        foreach (string chara in input.ToList())
+        foreach (string chara in input.ToPList())
         {
             if (chara == "(")
             {
@@ -488,14 +482,14 @@ public class EquationHandler
         {
             test += chara;
         }
-        return output.ToList();
+        return output.ToPList();
     }
 
     public static Operation FindNextOperation(string input)
     {
         input = RemoveCharacter(input, " ");
-        List<string> characters = SplitString(input);
-        List<string> charasToFind = new List<string>();
+        PList<string> characters = SplitString(input);
+        PList<string> charasToFind = new PList<string>();
         if (characters.Contains("("))
         {
             charasToFind.Add("(");
@@ -589,10 +583,10 @@ public class EquationHandler
     public static string SigFigAddition(string input, int decimalCount = -1)
     {
         input = RemoveCharacter(input, " ");
-        List<string> parts = SplitOperation(input);
-        List<int> decimalNums = new List<int>();
+        PList<string> parts = SplitOperation(input);
+        PList<int> decimalNums = new PList<int>();
         double result = 0;
-        foreach (string part in parts.ToList())
+        foreach (string part in parts.ToPList())
         {
             double number;
             if (part != "" && part != null)
@@ -629,8 +623,8 @@ public class EquationHandler
     public static string SigFigMultiply(string input, int sigfigCount = 0) // can only accept equations with a single operator, works for multiplication and division
     {
         input = RemoveCharacter(input, " ");
-        List<string> parts = SplitOperation(input);
-        List<int> sigfigNums = new List<int>();
+        PList<string> parts = SplitOperation(input);
+        PList<int> sigfigNums = new PList<int>();
         bool num = false;
         double result = 0;
         string operation = "";
@@ -728,7 +722,7 @@ public class EquationHandler
         }
         else if (diff > 0)
         {
-            List<string> characters = SplitString(result);
+            PList<string> characters = SplitString(result);
             int index = -1;
             int sigfigsFound = 0;
             bool intFound = false;
@@ -773,7 +767,7 @@ public class EquationHandler
             {
                 if (index < decimalIndex - 1)
                 {
-                    List<int> removeIndexes = new List<int>();
+                    PList<int> removeIndexes = new PList<int>();
                     for (int i = decimalIndex; i < characters.Count; i++)
                     {
                         removeIndexes.Add(i);
@@ -835,7 +829,7 @@ public class EquationHandler
         input = RemoveCharacter(input, " ");
         double num = Convert.ToDouble(input);
         string result = input;
-        List<string> characters = SplitString(result);
+        PList<string> characters = SplitString(result);
         int numBeforeDecimal = 0;
         if (characters.Contains("."))
         {
@@ -898,7 +892,7 @@ public class EquationHandler
         }
         exponent = index;
         string numString = FixExponent(num.ToString("r"));
-        List<string> charas = SplitString(numString);
+        PList<string> charas = SplitString(numString);
         int numBeforeDecimal = 0;
         bool hasDecimal = charas.Contains(".");
         string result = "";
@@ -933,7 +927,7 @@ public class EquationHandler
         }
         if (SigFigCount(result) > numSigfig)
         {
-            List<string> characters = SplitString(result);
+            PList<string> characters = SplitString(result);
             while (SigFigCount(result) > numSigfig)
             {
                 characters.RemoveAt(characters.Count - 1);
@@ -952,7 +946,7 @@ public class EquationHandler
     public static string Sci2Normal(string input)
     {
         input = RemoveCharacter(input, " ");
-        List<string> characters = SplitString(input);
+        PList<string> characters = SplitString(input);
         string numString = "";
         string exponentString = "";
         bool xFound = false;
@@ -1015,7 +1009,7 @@ public class EquationHandler
             curExpo = ConvertUnitPrefix(curPrefI, endPrefI, curExpo, cubed);
         }
         input = SigFigSciNota(input, SigFigCount(input));
-        List<string> charas = SplitString(input);
+        PList<string> charas = SplitString(input);
         bool foundX = false;
         bool foundExpo = false;
         string extraExpo = "";
@@ -1058,10 +1052,10 @@ public class EquationHandler
         return output;
     }
 
-    public static List<string> SplitString(string input)
+    public static PList<string> SplitString(string input)
     {
         char[] chars = input.ToCharArray();
-        List<string> characters = new List<string>();
+        PList<string> characters = new PList<string>();
         foreach (char chara in chars)
         {
             characters.Add(chara.ToString());
@@ -1069,12 +1063,12 @@ public class EquationHandler
         return characters;
     }
 
-    public static List<string> SplitOperation(string input)
+    public static PList<string> SplitOperation(string input)
     {
         input = RemoveCharacter(input, " ");
-        List<string> output = new List<string>();
-        List<string> characters = SplitString(input);
-        List<List<string>> parts = new List<List<string>>();
+        PList<string> output = new PList<string>();
+        PList<string> characters = SplitString(input);
+        PList<PList<string>> parts = new PList<PList<string>>();
         int partNum = -1;
         bool changed = true;
         bool num = false;
@@ -1114,7 +1108,7 @@ public class EquationHandler
             }
             if (changed)
             {
-                parts.Add(new List<string>());
+                parts.Add(new PList<string>());
                 partNum++;
                 changed = false;
             }
@@ -1138,7 +1132,7 @@ public class EquationHandler
         if (input.Contains('E'))
         {
             result = "";
-            List<string> charas = SplitString(input);
+            PList<string> charas = SplitString(input);
             bool foundExpo = false;
             string expoString = "";
             string num = "";
@@ -1210,7 +1204,7 @@ public class EquationHandler
         {
             result = result.Insert(0, "0");
         }
-        List<string> characters = SplitString(result);
+        PList<string> characters = SplitString(result);
         if (negative)
         {
             for (int i = characters.Count - 1; i >= 0; i--)
@@ -1234,161 +1228,9 @@ public class EquationHandler
         return output;
     }
 
-    public static bool ValidateCompound(string input)
-    {
-        List<Element> elements = SplitCompound(input);
-        bool output = true;
-        foreach (Element elem in elements)
-        {
-            if (elemCont.GetElement(elem.symbol, ElemSearchMode.atomicSymbol) == null)
-            {
-                output = false;
-                break;
-            }
-        }
-        return output;
-    }
-
-    public static string CalculateCompoundMass(string input)
-    {
-        List<Element> elements = SplitCompound(input);
-        string equation = "";
-        string mass;
-        string result = "";
-        List<int> decimalCounts = new List<int>();
-        if (elements.Count > 1)
-        {
-            foreach (Element elem in elements)
-            {
-                mass = elemCont.GetElement(elem.symbol, ElemSearchMode.atomicSymbol).mass;
-                decimalCounts.Add(DecimalCount(mass));
-                if (equation != "")
-                {
-                    equation += "+";
-                }
-                equation += $"(({mass})x{elem.count})";
-            }
-            int rounding = decimalCounts[0];
-            foreach (int decimalCount in decimalCounts)
-            {
-                if (decimalCount > rounding)
-                {
-                    rounding = decimalCount;
-                }
-            }
-            result = SolveEquation(equation, true, rounding);
-        }
-        else
-        {
-            mass = elemCont.GetElement(elements[0].symbol, ElemSearchMode.atomicSymbol).mass;
-            equation = $"({mass})x{elements[0].count}";
-            result = SolveEquation(equation, false);
-        }
-        string output = result;
-        return output;
-    }
-
-    public static List<Element> SplitCompound(string input, bool condense = true)
-    {
-        List<Element> output = new List<Element>();
-        List<string> dividedCompound = DivideCompoundAtParentheses(input);
-        string expandedCompound = ExpandCompound(dividedCompound.ToList());
-        if (condense)
-        {
-            output.AddRange(CondenseElements(expandedCompound));
-        }
-        else
-        {
-            output.AddRange(StringToElemList(input));
-        }
-        return output.ToList();
-    }
-
-    public static List<Element> CondenseElements(string input)
-    {
-        List<Element> output = new List<Element>();
-        List<Element> elems = StringToElemList(input);
-        int symbolsChecked = 0;
-        while (symbolsChecked < elems.Count)
-        {
-            string symbol = elems[0].symbol;
-            Element condElem = elems[0];
-            elems.RemoveAt(0);
-            foreach (Element elem in elems.ToList())
-            {
-                if (elem.symbol == symbol)
-                {
-                    condElem.count += elem.count;
-                    elems.Remove(elem);
-                }
-            }
-            elems.Add(condElem);
-            symbolsChecked++;
-        }
-        output.AddRange(elems);
-        return output.ToList();
-    }
-
-    public static List<Element> StringToElemList(string input)
-    {
-        List<Element> output = new List<Element>();
-        Regex elemPullRegex = new Regex(elemPullRegexString);
-        Regex elemSplitRegex = new Regex(elemSplitRegexString);
-        Match match = elemPullRegex.Match(input);
-        CaptureCollection elems = match.Groups["elem"].Captures;
-        foreach (Capture elem in elems)
-        {
-            match = elemSplitRegex.Match(elem.Value);
-            string symbol = match.Groups["elem"].Value;
-            string countString = match.Groups["count"].Value;
-            int count = 1;
-            if (countString != string.Empty)
-            {
-                count = Convert.ToInt32(countString);
-            }
-            output.Add(new Element(symbol, count));
-        }
-        return output.ToList();
-    }
-
-    public static string ExpandCompound(List<string> input)
-    {
-        string output = "";
-        Regex compExpRegex = new Regex(compExpRegexString);
-        foreach (string section in input)
-        {
-            Match match = compExpRegex.Match(section);
-            string comp = match.Groups["comp"].Captures[0].Value;
-            string countString = match.Groups["count"].Captures[0].Value;
-            int count = 1;
-            if (countString != string.Empty)
-            {
-                count = Convert.ToInt32(countString);
-            }
-            for (int i = 0; i < count; i++)
-            {
-                output += comp;
-            }
-        }
-        return output;
-    }
-
-    public static List<string> DivideCompoundAtParentheses(string input)
-    {
-        List<string> output = new List<string>();
-        Regex compDivRegex = new Regex(compDivRegexString);
-        Match match = compDivRegex.Match(input);
-        CaptureCollection comps = match.Groups["comp"].Captures;
-        foreach (Capture comp in comps)
-        {
-            output.Add(comp.Value);
-        }
-        return output.ToList();
-    }
-
     public static int DigitsAfterDecimal(string input)
     {
-        List<string> charas = SplitString(input);
+        PList<string> charas = SplitString(input);
         int output = 0;
         bool foundDecimal = false;
         foreach (string chara in charas)
@@ -1413,7 +1255,7 @@ public class EquationHandler
             double num = Convert.ToDouble(input);
             string rounding = $"F{decimalCount}";
             string result = num.ToString(rounding);
-            List<string> charas = SplitString(result);
+            PList<string> charas = SplitString(result);
             int start = charas.Count;
             for (int i = start - 1; i >= 0; i--)
             {
@@ -1455,11 +1297,6 @@ public class EquationHandler
     {
         return units[index];
     }
-
-    public static void SetElemCont(ElementContainerSO newElemCont)
-    {
-        elemCont = newElemCont;
-    }
 }
 
 public class Operation
@@ -1483,17 +1320,5 @@ public class UnitPrefix
     {
         this.prefix = prefix;
         this.multiple = multiple;
-    }
-}
-
-public class Element
-{
-    public string symbol;
-    public int count;
-
-    public Element(string symbol, int count)
-    {
-        this.symbol = symbol;
-        this.count = count;
     }
 }

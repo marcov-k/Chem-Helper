@@ -31,8 +31,8 @@ public class PerCompOverlay : MonoBehaviour
     public List<PerCompData> CalculatePerComp(string input)
     {
         List<PerCompData> output = new List<PerCompData>();
-        List<Element> elems = EquationHandler.SplitCompound(input);
-        string compMass = EquationHandler.CalculateCompoundMass(input);
+        List<Element> elems = ReactionHandler.SplitCompoundString(input);
+        string compMass = ReactionHandler.CalculateCompoundMass(input);
         foreach (Element elem in elems)
         {
             string elemMass = elemCont.GetElement(elem.symbol, ElemSearchMode.atomicSymbol).mass;
@@ -54,7 +54,7 @@ public class PerCompOverlay : MonoBehaviour
             warningText += "Missing Input";
             showWarning = true;
         }
-        else if (!finalCompRegex.IsMatch(comp) || !EquationHandler.ValidateCompound(comp))
+        else if (!finalCompRegex.IsMatch(comp) || !ReactionHandler.ValidateCompound(comp))
         {
             warningText += "Compound";
             showWarning = true;
