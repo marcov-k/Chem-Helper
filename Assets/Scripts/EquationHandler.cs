@@ -111,6 +111,10 @@ public class EquationHandler
 
     public static string SolveEquation(string input, bool useSigfigs, int targetSigfig = 0)
     {
+        if (input.Contains("Undefined"))
+        {
+            return "Undefined";
+        }
         Regex divRegex = new Regex(zeroDivRegex);
         input = RemoveCharacter(input, " ");
         input = input.Replace("*", "x");

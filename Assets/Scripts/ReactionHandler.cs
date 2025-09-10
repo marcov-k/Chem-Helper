@@ -11,7 +11,7 @@ public class ReactionHandler
     const string compDivRegexString = @"^(?<comp>\(?(?:[A-Z][a-z]?[0-9]*)+(?:\)[0-9]*)?)+$";
     const string compDivReactRegexString = @"^(?<comp>\(?(?:[0-9]*[A-Z][a-z]?[0-9]*)+(?:\)[0-9]*)?)+$";
     const string compExpRegexString = @"^\(?(?<comp>(?:[A-Z][a-z]?[0-9]*)+)\)?(?<count>[0-9]*)?$";
-    const string compExpReactRegexString = @"^\(?(?<count>[0-9]*)?(?<comp>(?:[A-Z][a-z]?[0-9]*)+)\)?$";
+    const string compExpReactRegexString = @"^\(?(?<count>[0-9]*)?(?<comp>(?:[A-Z][a-z]?[0-9]*)+)\)?(?<count2>[0-9]*)$";
     const string elemPullRegexString = @"^(?<elem>[A-Z][a-z]?[0-9]*)+$";
     const string elemSplitRegexString = @"^(?<elem>[A-Z][a-z]?)(?<count>[1-9]*)$";
     const string compCountRegexString = @"^(?<count>[0-9]*)(?<formula>(?:\(?[A-Z][a-z]?[\)0-9]*)+)$";
@@ -275,16 +275,7 @@ public class ReactionHandler
             {
                 count = compounds[i].count.ToString();
             }
-            output += count;
-            foreach (Element elem in compounds[i].elems)
-            {
-                count = "";
-                if (elem.count > 1)
-                {
-                    count = elem.count.ToString();
-                }
-                output += elem.symbol + count;
-            }
+            output += count + compounds[i].formula;
         }
         return output;
     }
@@ -301,7 +292,7 @@ public class ReactionHandler
             count = Convert.ToInt32(countString);
         }
         List<Element> elems = SplitCompoundString(formula);
-        Compound output = new Compound(elems.ToPList(), count);
+        Compound output = new Compound(elems.ToPList(), formula, count);
         return output;
     }
 
@@ -503,6 +494,14 @@ public class ReactionHandler
             {
                 count = Convert.ToInt32(countString);
             }
+            if (react)
+            {
+                countString = match.Groups["count2"].Captures[0].Value;
+                if (countString != string.Empty)
+                {
+                    count *= Convert.ToInt32(countString);
+                }
+            }
             for (int i = 0; i < count; i++)
             {
                 output += comp;
@@ -538,6 +537,7 @@ public class ReactionHandler
 public class Compound : IEquatable<Compound>
 {
     public PList<Element> elems = new PList<Element>();
+    public string formula;
     public int count;
 
     public bool FullEquals(Compound compareComp)
@@ -558,10 +558,11 @@ public class Compound : IEquatable<Compound>
 
     public override string ToString() => $"{count}{elems}";
 
-    public Compound(PList<Element> elems, int count)
+    public Compound(PList<Element> elems, string formula, int count)
     {
         this.elems = elems.ToPList();
         this.count = count;
+        this.formula = formula;
     }
 }
 
