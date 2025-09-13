@@ -15,10 +15,10 @@ public class OverlayManager : MonoBehaviour
 
     void SetOverlays()
     {
-        for (int i = 1; i < mainCanvas.transform.childCount - 2; i++)
+        for (int i = 2; i < mainCanvas.transform.childCount - 2; i++)
         {
             overlays.Add(mainCanvas.transform.GetChild(i).gameObject);
-            overlays[i - 1].SetActive(false);
+            overlays[i - 2].SetActive(false);
         }
     }
 
