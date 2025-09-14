@@ -14,10 +14,9 @@ jobs:
 
       - name: Debug GitHub API response
         env:
-          GITHUB_API_URL: https://api.github.com/repos/itchio/butler/releases/latest
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          curl -s -H "Authorization: token $GITHUB_TOKEN" $GITHUB_API_URL > response.json
+          curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/itchio/butler/releases/latest > response.json
           cat response.json
 
       - name: Push to Itch.io
