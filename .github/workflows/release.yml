@@ -12,9 +12,13 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
-      - name: Install butler
+
+      - name: Set up Butler version
+        run: echo "BUTLER_VERSION=15.24.0" >> $GITHUB_ENV
+
+      - name: Install Butler
         run: |
-          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/15.24.0/archive/default?download=zip
+          curl -L -o butler.zip https://github.com/itchio/butler/releases/download/v${{ env.BUTLER_VERSION }}/butler-linux-amd64.zip
           unzip butler.zip
           chmod +x butler
           sudo mv butler /usr/local/bin/butler
