@@ -12,12 +12,24 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
         
-      - name: Install butler
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+
+      - name: Install git
+        run: sudo apt-get update && sudo apt-get install -y git
+
+      - name: Clone Butler repo
+        run: git clone https://github.com/itchio/butler.git
+
+      - name: Build Butler binary
         run: |
-          BUTLER_VERSION=15.24.0
-          curl -L -o butler "https://github.com/itchio/butler/releases/download/v${BUTLER_VERSION}/butler-linux-amd64"
-          chmod +x butler
-          sudo mv butler /usr/local/bin/butler
+          cd butler
+          go build -o butler ./cmd/butler
+
+      - name: Verify Butler version
+        run: ./butler/butler --version
           
       - name: Push to Itch.io
         env:
@@ -31,4 +43,4 @@ jobs:
           VERSION=${{ github.event.release.tag_name }}
 
           echo "Pushing $PACKAGE_DIR to $USER/$GAME:$CHANNEL with version $VERSION"
-          butler push "$PACKAGE_DIR" "$USER/$GAME:$CHANNEL" --userversion "$VERSION"
+          ./butler/butler push "$PACKAGE_DIR" "$USER/$GAME:$CHANNEL" --userversion "$VERSION"
