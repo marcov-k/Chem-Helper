@@ -14,10 +14,10 @@ jobs:
 
       - name: Install Butler
         run: |
-          curl -L -o butler.tar.gz https://broth.itch.ovh/butler/linux-amd64/latest/archive/default
-          mkdir -p butler
-          tar -xzf butler.tar.gz -C butler
-          sudo mv butler/butler /usr/local/bin/
+          mkdir -p ~/.config/itch
+          curl -L https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default -o butler
+          chmod +x butler
+          sudo mv butler /usr/local/bin/
           butler --version
 
       - name: Push to Itch.io
