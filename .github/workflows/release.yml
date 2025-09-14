@@ -14,16 +14,10 @@ jobs:
 
       - name: Install butler
         run: |
-          BUTLER_VERSION=15.24.0
-          BUTLER_URL="https://broth.itch.ovh/butler/linux-amd64/${BUTLER_VERSION}/archive/default"
-          
-          echo "Downloading butler $BUTLER_VERSION from $BUTLER_URL..."
-      
-          curl -L "$BUTLER_URL" -o butler
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/15.24.0/archive/default?download=zip
+          unzip butler.zip
           chmod +x butler
           sudo mv butler /usr/local/bin/butler
-      
-          echo "Butler version installed:"
           butler -V
           
       - name: Push to Itch.io
