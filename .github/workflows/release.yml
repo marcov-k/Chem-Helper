@@ -12,14 +12,10 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
-      - name: Set up jq
-        run: sudo apt-get update && sudo apt-get install -y jq
-
       - name: Install butler
         run: |
           BUTLER_VERSION=v15.24.0
-          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/${BUTLER_VERSION}/archive/default
-          unzip butler.zip
+          curl -L -o butler https://broth.itch.ovh/butler/linux-amd64/${BUTLER_VERSION}/archive/default
           chmod +x butler
           sudo mv butler /usr/local/bin/butler
           
