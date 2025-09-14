@@ -14,14 +14,10 @@ jobs:
         
       - name: Install butler
         run: |
-          # -L follows redirects
-          # -O specifies output name
-          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
-          unzip butler.zip
-          # GNU unzip tends to not set the executable bit even though it's set in the .zip
+          BUTLER_VERSION=15.24.0
+          curl -L -o butler "https://github.com/itchio/butler/releases/download/v${BUTLER_VERSION}/butler-linux-amd64"
           chmod +x butler
-          # just a sanity check run (and also helpful in case you're sharing CI logs)
-          ./butler -V
+          sudo mv butler /usr/local/bin/butler
           
       - name: Push to Itch.io
         env:
