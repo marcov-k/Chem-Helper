@@ -14,7 +14,7 @@ jobs:
 
       - name: Install Butler
         run: |
-          curl -L -o butler.gz https://github.com/itchio/butler/releases/latest/download/butler-linux-amd64.gz
+          curl -L -o butler.gz https://github.com/itchio/butler/releases/download/v15.24.0/butler-linux-amd64.gz
           gunzip butler.gz
           chmod +x butler
           sudo mv butler /usr/local/bin/
