@@ -15,54 +15,13 @@ jobs:
       - name: Set up jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Fetch latest release info
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: itchio/butler
-          MATCH: butler-linux-amd64
+      - name: Install butler
         run: |
-          echo "Fetching latest release info..."
-          release_json=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/$REPO/releases/latest")
-
-          echo "$release_json" > release.json
-
-          tag_name=$(echo "$release_json" | jq -r '.tag_name')
-          echo "Latest release tag: $tag_name"
-
-          asset_count=$(echo "$release_json" | jq '.assets | length')
-
-          if [ "$asset_count" -gt 0 ]; then
-            echo "Assets found: $asset_count"
-
-            asset_url=$(echo "$release_json" | jq -r --arg match "$MATCH" '.assets[] | select(.name | test($match)) | .browser_download_url')
-
-            if [ -n "$asset_url" ]; then
-              echo "Found matching asset: $asset_url"
-              curl -L -o butler "$asset_url"
-              echo "Downloaded asset to ./butler"
-              exit 0
-            else
-              echo "No matching asset found, will try tarball instead."
-            fi
-          else
-            echo "No assets found on this release."
-          fi
-
-          tarball_url=$(echo "$release_json" | jq -r '.tarball_url')
-          echo "Downloading source tarball: $tarball_url"
-          curl -L -o butler.tar.gz "$tarball_url"
-          echo "Downloaded source tarball to ./butler.tar.gz"
-
-      - name: Extract and list tarball contents
-        run: |
-          tar -xzf butler.tar.gz
-          ls -R
-      
-      - name: Extract and install butler
-        run: |
-          tar -xzf butler.tar.gz
-          mv itchio-butler-*/butler /usr/local/bin/butler
-          chmod +x /usr/local/bin/butler
+          BUTLER_VERSION=v15.24.0
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/${BUTLER_VERSION}/archive/default
+          unzip butler.zip
+          chmod +x butler
+          sudo mv butler /usr/local/bin/butler
           
       - name: Push to Itch.io
         env:
