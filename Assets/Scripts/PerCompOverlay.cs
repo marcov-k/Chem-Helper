@@ -9,7 +9,7 @@ public class PerCompOverlay : MonoBehaviour
     [SerializeField] TMP_InputField input;
     [SerializeField] GameObject resultPrefab;
     [SerializeField] GameObject resultPlaceholder;
-    readonly List<GameObject> outputObjects = new List<GameObject>();
+    List<GameObject> outputObjects = new List<GameObject>();
     const int resultsPerLine = 4;
     const int outputSigfigs = 4;
     [SerializeField] ElementContainerSO elemCont;
