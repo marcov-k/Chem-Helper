@@ -53,6 +53,11 @@ jobs:
           curl -L -o butler.tar.gz "$tarball_url"
           echo "Downloaded source tarball to ./butler.tar.gz"
 
+      - name: Extract and list tarball contents
+        run: |
+          tar -xzf butler.tar.gz
+          ls -R
+      
       - name: Extract and install butler
         run: |
           tar -xzf butler.tar.gz
