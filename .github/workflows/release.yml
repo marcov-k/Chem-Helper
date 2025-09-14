@@ -14,8 +14,8 @@ jobs:
 
       - name: Install Butler
         run: |
-          mkdir -p ~/.config/itch
-          curl -L https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default -o butler
+          curl -L -o butler.gz https://github.com/itchio/butler/releases/latest/download/butler-linux-amd64.gz
+          gunzip butler.gz
           chmod +x butler
           sudo mv butler /usr/local/bin/
           butler --version
