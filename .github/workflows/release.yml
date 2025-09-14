@@ -11,18 +11,12 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
-
-
-      - name: Set up Butler version
-        run: echo "BUTLER_VERSION=15.24.0" >> $GITHUB_ENV
-
-      - name: Install Butler
+        
+      - name: Install butler
         run: |
-          curl -L -o butler.zip https://github.com/itchio/butler/releases/download/v${{ env.BUTLER_VERSION }}/butler-linux-amd64.zip
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
           unzip butler.zip
           chmod +x butler
-          sudo mv butler /usr/local/bin/butler
-          butler -V
           
       - name: Push to Itch.io
         env:
@@ -36,4 +30,4 @@ jobs:
           VERSION=${{ github.event.release.tag_name }}
 
           echo "Pushing $PACKAGE_DIR to $USER/$GAME:$CHANNEL with version $VERSION"
-          butler push "$PACKAGE_DIR" "$USER/$GAME:$CHANNEL" --userversion "$VERSION"
+          ./butler push "$PACKAGE_DIR" "$USER/$GAME:$CHANNEL" --userversion "$VERSION"
