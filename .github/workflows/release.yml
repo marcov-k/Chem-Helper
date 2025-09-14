@@ -31,4 +31,4 @@ jobs:
           VERSION=${{ github.event.release.tag_name }}
 
           echo "Pushing $PACKAGE_DIR to $USER/$GAME:$CHANNEL with version $VERSION"
-          ./butler push "$PACKAGE_DIR" "$USER/$GAME:$CHANNEL" --userversion "$VERSION"
+          butler push "$PACKAGE_DIR" "$USER/$GAME:$CHANNEL" --userversion "$VERSION"
