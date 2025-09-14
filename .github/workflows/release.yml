@@ -52,6 +52,13 @@ jobs:
           echo "Downloading source tarball: $tarball_url"
           curl -L -o butler.tar.gz "$tarball_url"
           echo "Downloaded source tarball to ./butler.tar.gz"
+
+      - name: Extract and install butler
+        run: |
+          tar -xzf butler.tar.gz
+          mv itchio-butler-*/butler /usr/local/bin/butler
+          chmod +x /usr/local/bin/butler
+          
       - name: Push to Itch.io
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
