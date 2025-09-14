@@ -12,12 +12,25 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
-      - name: Install Butler
+      - name: Download latest Butler binary using GitHub API
+        env:
+          GITHUB_API_URL: https://api.github.com/repos/itchio/butler/releases/latest
         run: |
-          curl -L -o butler.gz https://github.com/itchio/butler/releases/download/v15.24.0/butler-linux-amd64.gz
+          echo "Fetching latest release info..."
+          DOWNLOAD_URL=$(curl -s $GITHUB_API_URL \
+            | jq -r '.assets[] | select(.name == "butler-linux-amd64.gz") | .url')
+      
+          echo "Downloading Butler binary from $DOWNLOAD_URL"
+      
+          # Download asset with header to accept binary content
+          curl -L -H "Accept: application/octet-stream" -o butler.gz "$DOWNLOAD_URL"
+      
+          # Unzip, make executable, move to PATH
           gunzip butler.gz
           chmod +x butler
           sudo mv butler /usr/local/bin/
+      
+          # Verify
           butler --version
 
       - name: Push to Itch.io
