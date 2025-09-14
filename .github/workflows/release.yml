@@ -18,12 +18,11 @@ jobs:
           BUTLER_URL="https://broth.itch.ovh/butler/linux-amd64/${BUTLER_VERSION}/archive/default"
           
           echo "Downloading butler $BUTLER_VERSION from $BUTLER_URL..."
-          
-          mkdir -p ~/.butler
-          curl -L "$BUTLER_URL" | tar -xzf - -C ~/.butler
-          sudo mv ~/.butler/butler /usr/local/bin/butler
-          chmod +x /usr/local/bin/butler
-          
+      
+          curl -L "$BUTLER_URL" -o butler
+          chmod +x butler
+          sudo mv butler /usr/local/bin/butler
+      
           echo "Butler version installed:"
           butler -V
           
