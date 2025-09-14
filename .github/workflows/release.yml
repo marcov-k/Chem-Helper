@@ -12,13 +12,46 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
-      - name: Debug GitHub API response
+      - name: Set up jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Fetch latest release info
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: itchio/butler
+          MATCH: butler-linux-amd64
         run: |
-          curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/itchio/butler/releases/latest > response.json
-          cat response.json
+          echo "Fetching latest release info..."
+          release_json=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/$REPO/releases/latest")
 
+          echo "$release_json" > release.json
+
+          tag_name=$(echo "$release_json" | jq -r '.tag_name')
+          echo "Latest release tag: $tag_name"
+
+          asset_count=$(echo "$release_json" | jq '.assets | length')
+
+          if [ "$asset_count" -gt 0 ]; then
+            echo "Assets found: $asset_count"
+
+            asset_url=$(echo "$release_json" | jq -r --arg match "$MATCH" '.assets[] | select(.name | test($match)) | .browser_download_url')
+
+            if [ -n "$asset_url" ]; then
+              echo "Found matching asset: $asset_url"
+              curl -L -o butler "$asset_url"
+              echo "Downloaded asset to ./butler"
+              exit 0
+            else
+              echo "No matching asset found, will try tarball instead."
+            fi
+          else
+            echo "No assets found on this release."
+          fi
+
+          tarball_url=$(echo "$release_json" | jq -r '.tarball_url')
+          echo "Downloading source tarball: $tarball_url"
+          curl -L -o butler.tar.gz "$tarball_url"
+          echo "Downloaded source tarball to ./butler.tar.gz"
       - name: Push to Itch.io
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
