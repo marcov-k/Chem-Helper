@@ -2,18 +2,33 @@ name: Push to Itch
 
 on:
   release:
-    types: [published] # This triggers the workflow when a release is published
+    types: [published]  # Triggers when a GitHub release is published
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: yeslayla/butler-publish-itchio-action@master
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Install Butler
+        run: |
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/latest/archive/default
+          unzip butler.zip -d butler
+          sudo mv butler/butler /usr/local/bin/
+          butler --version
+
+      - name: Push to Itch.io
         env:
-          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
-          CHANNEL: html
-          ITCH_GAME: chem-helper
-          ITCH_USER: chemhelper
-          PACKAGE: Builds/
-          VERSION: ${{ github.event.release.tag_name }}
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+        run: |
+          # Variables
+          GAME=chem-helper
+          USER=chemhelper
+          CHANNEL=html
+          PACKAGE_DIR=Builds/
+          VERSION=${{ github.event.release.tag_name }}
+
+          echo "Pushing $PACKAGE_DIR to $USER/$GAME:$CHANNEL with version $VERSION"
+          butler push "$PACKAGE_DIR" "$USER/$GAME:$CHANNEL" --userversion "$VERSION"
