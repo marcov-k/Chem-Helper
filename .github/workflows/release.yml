@@ -15,22 +15,20 @@ jobs:
       - name: Download latest Butler binary using GitHub API
         env:
           GITHUB_API_URL: https://api.github.com/repos/itchio/butler/releases/latest
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Fetching latest release info..."
-          DOWNLOAD_URL=$(curl -s $GITHUB_API_URL \
+          DOWNLOAD_URL=$(curl -s -H "Authorization: token $GITHUB_TOKEN" $GITHUB_API_URL \
             | jq -r '.assets[] | select(.name == "butler-linux-amd64.gz") | .url')
       
           echo "Downloading Butler binary from $DOWNLOAD_URL"
       
-          # Download asset with header to accept binary content
-          curl -L -H "Accept: application/octet-stream" -o butler.gz "$DOWNLOAD_URL"
+          curl -L -H "Accept: application/octet-stream" -H "Authorization: token $GITHUB_TOKEN" -o butler.gz "$DOWNLOAD_URL"
       
-          # Unzip, make executable, move to PATH
           gunzip butler.gz
           chmod +x butler
           sudo mv butler /usr/local/bin/
       
-          # Verify
           butler --version
 
       - name: Push to Itch.io
