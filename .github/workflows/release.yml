@@ -22,14 +22,12 @@ jobs:
 
       - name: Clone Butler repo
         run: git clone https://github.com/itchio/butler.git
-
+      
       - name: Build Butler binary
-        run: |
-          cd butler
-          go build -o butler ./cmd/butler
-
+        run: go build -o butler ./cmd/butler
+      
       - name: Verify Butler version
-        run: ./butler/butler --version
+        run: ./butler --version
 
       - name: Push to Itch.io
         env:
