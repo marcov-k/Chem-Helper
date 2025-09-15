@@ -9,39 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v4
-
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: '1.20'
-
-      - name: Install git
-        run: sudo apt-get update && sudo apt-get install -y git
-
-      - name: Clone Butler repo
-        run: git clone https://github.com/itchio/butler.git
-      
-      - name: Build Butler binary
-        run: |
-          cd butler
-          go mod download
-          go build -o butler ./cmd/butler
-      
-      - name: Verify Butler version
-        run: ./butler --version
-
-      - name: Push to Itch.io
+      - uses: actions/checkout@v4
+      - uses: yeslayla/butler-publish-itchio-action@master
         env:
-          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-        run: |
-          # Variables
-          GAME=chem-helper
-          USER=chemhelper
-          CHANNEL=html
-          PACKAGE_DIR=Builds/
-          VERSION=${{ github.event.release.tag_name }}
-
-          echo "Pushing $PACKAGE_DIR to $USER/$GAME:$CHANNEL with version $VERSION"
-          ./butler/butler push "$PACKAGE_DIR" "$USER/$GAME:$CHANNEL" --userversion "$VERSION"
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: html
+          ITCH_GAME: chem-helper
+          ITCH_USER: chemhelper
+          PACKAGE: Builds/
