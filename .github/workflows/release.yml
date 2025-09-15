@@ -24,7 +24,10 @@ jobs:
         run: git clone https://github.com/itchio/butler.git
       
       - name: Build Butler binary
-        run: go build -o butler ./cmd/butler
+        run: |
+          cd butler
+          go mod download
+          go build -o butler ./cmd/butler
       
       - name: Verify Butler version
         run: ./butler --version
