@@ -2,7 +2,7 @@ name: Push to Itch
 
 on:
   release:
-    types: [published]  # Triggers when a GitHub release is published
+    types: [published]  # Trigger on release published
 
 jobs:
   deploy:
@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
-        
+
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
@@ -30,7 +30,7 @@ jobs:
 
       - name: Verify Butler version
         run: ./butler/butler --version
-          
+
       - name: Push to Itch.io
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
