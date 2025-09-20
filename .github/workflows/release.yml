@@ -2,11 +2,12 @@ name: Push to Itch
 
 on:
   release:
-    types: [published] # This triggers the workflow when a release is published
+    types: [published]  # Trigger on release published
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
       - uses: yeslayla/butler-publish-itchio-action@master
@@ -16,4 +17,3 @@ jobs:
           ITCH_GAME: chem-helper
           ITCH_USER: chemhelper
           PACKAGE: Builds/
-          VERSION: ${{ github.event.release.tag_name }}
