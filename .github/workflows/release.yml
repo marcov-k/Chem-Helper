@@ -17,3 +17,4 @@ jobs:
           ITCH_GAME: chem-helper
           ITCH_USER: chemhelper
           PACKAGE: Builds/
+          VERSION: "{{ github.event.release.tag_name }}"
