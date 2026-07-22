@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Chem-HelperIcon_0: -3579619080248934300
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
