@@ -66,6 +66,10 @@ public class UnitConvOverlay : MonoBehaviour
                 }
                 expoNum = System.Convert.ToInt32(expoString);
             }
+            else
+            {
+                numToSend = inputNum;
+            }
             result = EquationHandler.ConvertUnits(numToSend, startPref, startUnit, endPref, endUnit, expoNum);
         }
         string output = result;
